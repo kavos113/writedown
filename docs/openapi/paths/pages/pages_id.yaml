@@ -1,0 +1,57 @@
+get:
+  tags:
+    - pages
+  summary: wikiページの取得
+  parameters:
+    - name: pageID
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+  responses:
+    '200':
+      description: Retrieved successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/pages/pages.yaml#/page'
+patch:
+  tags:
+    - pages
+  summary: wikiページの更新
+  parameters:
+    - name: pageID
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/pages/pages_id.yaml#/patchPage'
+  responses:
+    '200':
+      description: Updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/pages/pages.yaml#/page'
+delete:
+  tags:
+    - pages
+  summary: wikiページの削除
+  parameters:
+    - name: pageID
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 1
+  responses:
+    '204':
+      description: Deleted successfully

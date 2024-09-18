@@ -4,11 +4,30 @@
 package openapi
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/labstack/echo/v4"
+	"github.com/oapi-codegen/runtime"
 )
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// wikiページの作成
+	// (POST /pages)
+	PostPages(ctx echo.Context) error
+	// wikiページの削除
+	// (DELETE /pages/{pageID})
+	DeletePagesPageID(ctx echo.Context, pageID int64) error
+	// wikiページの取得
+	// (GET /pages/{pageID})
+	GetPagesPageID(ctx echo.Context, pageID int) error
+	// wikiページの更新
+	// (PATCH /pages/{pageID})
+	PatchPagesPageID(ctx echo.Context, pageID int) error
+	// wikiページの子ページ取得
+	// (GET /pages/{pageID}/child)
+	GetPagesPageIDChild(ctx echo.Context, pageID int) error
 	// 疎通確認
 	// (GET /ping)
 	GetPing(ctx echo.Context) error
@@ -17,6 +36,79 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// PostPages converts echo context to params.
+func (w *ServerInterfaceWrapper) PostPages(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.PostPages(ctx)
+	return err
+}
+
+// DeletePagesPageID converts echo context to params.
+func (w *ServerInterfaceWrapper) DeletePagesPageID(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "pageID" -------------
+	var pageID int64
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageID", ctx.Param("pageID"), &pageID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter pageID: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.DeletePagesPageID(ctx, pageID)
+	return err
+}
+
+// GetPagesPageID converts echo context to params.
+func (w *ServerInterfaceWrapper) GetPagesPageID(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "pageID" -------------
+	var pageID int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageID", ctx.Param("pageID"), &pageID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter pageID: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetPagesPageID(ctx, pageID)
+	return err
+}
+
+// PatchPagesPageID converts echo context to params.
+func (w *ServerInterfaceWrapper) PatchPagesPageID(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "pageID" -------------
+	var pageID int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageID", ctx.Param("pageID"), &pageID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter pageID: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.PatchPagesPageID(ctx, pageID)
+	return err
+}
+
+// GetPagesPageIDChild converts echo context to params.
+func (w *ServerInterfaceWrapper) GetPagesPageIDChild(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "pageID" -------------
+	var pageID int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "pageID", ctx.Param("pageID"), &pageID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter pageID: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetPagesPageIDChild(ctx, pageID)
+	return err
 }
 
 // GetPing converts echo context to params.
@@ -56,6 +148,11 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.POST(baseURL+"/pages", wrapper.PostPages)
+	router.DELETE(baseURL+"/pages/:pageID", wrapper.DeletePagesPageID)
+	router.GET(baseURL+"/pages/:pageID", wrapper.GetPagesPageID)
+	router.PATCH(baseURL+"/pages/:pageID", wrapper.PatchPagesPageID)
+	router.GET(baseURL+"/pages/:pageID/child", wrapper.GetPagesPageIDChild)
 	router.GET(baseURL+"/ping", wrapper.GetPing)
 
 }

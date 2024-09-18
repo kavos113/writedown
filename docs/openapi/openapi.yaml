@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: writedown
+  description: writedown
+  version: 1.0.0
+tags:
+  - name: ping
+    description: 疎通確認
+  - name: pages
+    description: wikiページ
+paths:
+  /ping:
+    get:
+      tags:
+        - ping
+      summary: 疎通確認
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pong'
+  /pages:
+    $ref: './paths/pages/pages.yaml'
+  /pages/{pageID}:
+    $ref: './paths/pages/pages_id.yaml'
+  /pages/{pageID}/child:
+    $ref: './paths/pages/pages_child.yaml'
+
+components:
+  schemas:
+    pong:
+      type: object
+      properties:
+        message:
+          type: string
+          example: pong
+    page:
+      $ref: './schemas/pages/pages.yaml#/page'
+    newPage:
+      $ref: './schemas/pages/pages.yaml#/newPage'
+    patchPage:
+      $ref: './schemas/pages/pages_id.yaml#/patchPage'
+    pageAbstract:
+      $ref: './schemas/pages/pages_child.yaml#/pageAbstract'

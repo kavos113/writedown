@@ -1,0 +1,17 @@
+post:
+  tags:
+    - pages
+  summary: wikiページの作成
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/pages/pages.yaml#/newPage'
+  responses:
+    '201':
+      description: Created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/pages/pages.yaml#/page'

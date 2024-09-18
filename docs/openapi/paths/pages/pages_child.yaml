@@ -1,0 +1,20 @@
+get:
+  tags:
+    - pages
+  summary: wikiページの子ページ取得
+  parameters:
+    - name: pageID
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+  responses:
+    '200':
+      description: Retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/pages/pages_child.yaml#/pageAbstract'

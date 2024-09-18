@@ -50,7 +50,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
             example: 1
       responses:
         '200':
@@ -69,14 +68,13 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
             example: 1
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/page'
+              $ref: '#/components/schemas/patchPage'
       responses:
         '200':
           description: Updated successfully
@@ -96,12 +94,6 @@ paths:
             type: integer
             format: int64
             example: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/deletePage'
       responses:
         '204':
           description: Deleted successfully
@@ -116,7 +108,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
             example: 1
       responses:
         '200':
@@ -126,8 +117,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/page'
-
+                  $ref: '#/components/schemas/pageAbstract'
 components:
   schemas:
     pong:
@@ -155,11 +145,11 @@ components:
         created_at:
           type: string
           format: date-time
-          example: 2021-01-01T00:00:00Z
+          example: '2021-01-01T00:00:00Z'
         updated_at:
           type: string
           format: date-time
-          example: 2021-01-01T00:00:00Z
+          example: '2021-01-01T00:00:00Z'
         creator:
           type: string
           example: owner
@@ -178,9 +168,33 @@ components:
         creator:
           type: string
           example: owner
-    deletePage:
+    patchPage:
       type: object
       properties:
+        id:
+          type: integer
+          example: 1
         path:
           type: string
           example: /path/to/page
+        title:
+          type: string
+          example: title
+        body:
+          type: string
+          example: wikiページの内容
+        creator:
+          type: string
+          example: owner
+    pageAbstract:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        path:
+          type: string
+          example: /path/to/page
+        title:
+          type: string
+          example: title
