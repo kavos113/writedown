@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: codegen-test
+  description: codegen-test
+  version: 1.0.0
+paths:
+  /ping:
+    get:
+      tags:
+        - ping
+      summary: 疎通確認
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pong'
+components:
+  schemas:
+    pong:
+      type: object
+      properties:
+        message:
+          type: string
+          example: pong
