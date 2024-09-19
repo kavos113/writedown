@@ -3,4 +3,6 @@ package: openapi
 output: model.gen.go
 generate:
   models: true
-import-mapping:
+output-options:
+  skip-prune: true
+  nullable-type: true

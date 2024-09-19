@@ -1,5 +1,9 @@
 pageAbstract:
   type: object
+  required:
+    - id
+    - path
+    - title
   properties:
     id:
       type: integer

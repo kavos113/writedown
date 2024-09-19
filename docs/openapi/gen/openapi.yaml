@@ -122,12 +122,22 @@ components:
   schemas:
     pong:
       type: object
+      required:
+        - message
       properties:
         message:
           type: string
           example: pong
     page:
       type: object
+      required:
+        - id
+        - path
+        - title
+        - body
+        - created_at
+        - updated_at
+        - creator
       properties:
         id:
           type: integer
@@ -155,6 +165,10 @@ components:
           example: owner
     newPage:
       type: object
+      required:
+        - path
+        - title
+        - body
       properties:
         path:
           type: string
@@ -170,6 +184,12 @@ components:
           example: owner
     patchPage:
       type: object
+      required:
+        - id
+        - path
+        - title
+        - body
+        - creator
       properties:
         id:
           type: integer
@@ -188,6 +208,10 @@ components:
           example: owner
     pageAbstract:
       type: object
+      required:
+        - id
+        - path
+        - title
       properties:
         id:
           type: integer

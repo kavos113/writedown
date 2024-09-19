@@ -1,5 +1,13 @@
 page:
   type: object
+  required:
+    - id
+    - path
+    - title
+    - body
+    - created_at
+    - updated_at
+    - creator
   properties:
     id:
       type: integer
@@ -27,6 +35,10 @@ page:
       example: owner
 newPage:
   type: object
+  required:
+    - path
+    - title
+    - body
   properties:
     path:
       type: string

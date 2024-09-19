@@ -32,6 +32,8 @@ components:
   schemas:
     pong:
       type: object
+      required:
+        - message
       properties:
         message:
           type: string

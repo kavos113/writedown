@@ -9,42 +9,42 @@ import (
 
 // NewPage defines model for newPage.
 type NewPage struct {
-	Body    *string `json:"body,omitempty"`
+	Body    string  `json:"body"`
 	Creator *string `json:"creator,omitempty"`
-	Path    *string `json:"path,omitempty"`
-	Title   *string `json:"title,omitempty"`
+	Path    string  `json:"path"`
+	Title   string  `json:"title"`
 }
 
 // Page defines model for page.
 type Page struct {
-	Body      *string    `json:"body,omitempty"`
-	CreatedAt *time.Time `json:"created_at,omitempty"`
-	Creator   *string    `json:"creator,omitempty"`
-	Id        *int64     `json:"id,omitempty"`
-	Path      *string    `json:"path,omitempty"`
-	Title     *string    `json:"title,omitempty"`
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+	Body      string    `json:"body"`
+	CreatedAt time.Time `json:"created_at"`
+	Creator   string    `json:"creator"`
+	Id        int64     `json:"id"`
+	Path      string    `json:"path"`
+	Title     string    `json:"title"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // PageAbstract defines model for pageAbstract.
 type PageAbstract struct {
-	Id    *int    `json:"id,omitempty"`
-	Path  *string `json:"path,omitempty"`
-	Title *string `json:"title,omitempty"`
+	Id    int    `json:"id"`
+	Path  string `json:"path"`
+	Title string `json:"title"`
 }
 
 // PatchPage defines model for patchPage.
 type PatchPage struct {
-	Body    *string `json:"body,omitempty"`
-	Creator *string `json:"creator,omitempty"`
-	Id      *int    `json:"id,omitempty"`
-	Path    *string `json:"path,omitempty"`
-	Title   *string `json:"title,omitempty"`
+	Body    string `json:"body"`
+	Creator string `json:"creator"`
+	Id      int    `json:"id"`
+	Path    string `json:"path"`
+	Title   string `json:"title"`
 }
 
 // Pong defines model for pong.
 type Pong struct {
-	Message *string `json:"message,omitempty"`
+	Message string `json:"message"`
 }
 
 // PostPagesJSONRequestBody defines body for PostPages for application/json ContentType.

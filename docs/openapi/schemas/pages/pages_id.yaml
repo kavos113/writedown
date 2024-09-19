@@ -1,5 +1,11 @@
 patchPage:
   type: object
+  required:
+    - id
+    - path
+    - title
+    - body
+    - creator
   properties:
     id:
       type: integer
