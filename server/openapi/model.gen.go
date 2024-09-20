@@ -9,10 +9,10 @@ import (
 
 // NewPage defines model for newPage.
 type NewPage struct {
-	Body    string  `json:"body"`
-	Creator *string `json:"creator,omitempty"`
-	Path    string  `json:"path"`
-	Title   string  `json:"title"`
+	Body     string `json:"body"`
+	Creator  string `json:"creator"`
+	ParentID int    `json:"parentID"`
+	Title    string `json:"title"`
 }
 
 // Page defines model for page.
@@ -35,11 +35,11 @@ type PageAbstract struct {
 
 // PatchPage defines model for patchPage.
 type PatchPage struct {
-	Body    string `json:"body"`
-	Creator string `json:"creator"`
-	Id      int    `json:"id"`
-	Path    string `json:"path"`
-	Title   string `json:"title"`
+	Body     string `json:"body"`
+	Creator  string `json:"creator"`
+	Id       int    `json:"id"`
+	ParentID int    `json:"parentID"`
+	Title    string `json:"title"`
 }
 
 // Pong defines model for pong.

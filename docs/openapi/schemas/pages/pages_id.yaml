@@ -2,7 +2,7 @@ patchPage:
   type: object
   required:
     - id
-    - path
+    - parentID
     - title
     - body
     - creator
@@ -10,9 +10,9 @@ patchPage:
     id:
       type: integer
       example: 1
-    path:
-      type: string
-      example: /path/to/page
+    parentID:
+      type: integer
+      example: 1
     title:
       type: string
       example: title
