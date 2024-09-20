@@ -14,8 +14,11 @@ type Page struct {
 }
 
 type PagesRepository interface {
-	CreatePage(p Page) (int, error)
+	CreatePage(p Page) (Page, error)
 	GetPageByID(id int) (Page, error)
-	UpdatePageByID(id int, p Page) error
+	UpdatePageByID(id int, p Page) (Page, error)
 	DeletePageByID(id int) error
+
+	GetPagePath(id int) (string, error)
+	GetChildrenPages(id int) ([]Page, error)
 }

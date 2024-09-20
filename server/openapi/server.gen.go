@@ -18,7 +18,7 @@ type ServerInterface interface {
 	PostPages(ctx echo.Context) error
 	// wikiページの削除
 	// (DELETE /pages/{pageID})
-	DeletePagesPageID(ctx echo.Context, pageID int64) error
+	DeletePagesPageID(ctx echo.Context, pageID int) error
 	// wikiページの取得
 	// (GET /pages/{pageID})
 	GetPagesPageID(ctx echo.Context, pageID int) error
@@ -51,7 +51,7 @@ func (w *ServerInterfaceWrapper) PostPages(ctx echo.Context) error {
 func (w *ServerInterfaceWrapper) DeletePagesPageID(ctx echo.Context) error {
 	var err error
 	// ------------- Path parameter "pageID" -------------
-	var pageID int64
+	var pageID int
 
 	err = runtime.BindStyledParameterWithOptions("simple", "pageID", ctx.Param("pageID"), &pageID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
 	if err != nil {

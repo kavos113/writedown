@@ -3,6 +3,7 @@ page:
   required:
     - id
     - path
+    - name
     - title
     - body
     - created_at
@@ -11,11 +12,13 @@ page:
   properties:
     id:
       type: integer
-      format: int64
       example: 1
     path:
       type: string
       example: /path/to/page
+    name:
+      type: string
+      example: page
     title:
       type: string
       example: title
@@ -37,6 +40,7 @@ newPage:
   type: object
   required:
     - parentID
+    - name
     - title
     - body
     - creator
@@ -44,6 +48,9 @@ newPage:
     parentID:
       type: integer
       example: 1
+    name:
+      type: string
+      example: page
     title:
       type: string
       example: title

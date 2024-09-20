@@ -92,7 +92,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
             example: 1
       responses:
         '204':
@@ -133,6 +132,7 @@ components:
       required:
         - id
         - path
+        - name
         - title
         - body
         - created_at
@@ -141,11 +141,13 @@ components:
       properties:
         id:
           type: integer
-          format: int64
           example: 1
         path:
           type: string
           example: /path/to/page
+        name:
+          type: string
+          example: page
         title:
           type: string
           example: title
@@ -167,6 +169,7 @@ components:
       type: object
       required:
         - parentID
+        - name
         - title
         - body
         - creator
@@ -174,6 +177,9 @@ components:
         parentID:
           type: integer
           example: 1
+        name:
+          type: string
+          example: page
         title:
           type: string
           example: title
@@ -188,6 +194,7 @@ components:
       required:
         - id
         - parentID
+        - name
         - title
         - body
         - creator
@@ -198,6 +205,9 @@ components:
         parentID:
           type: integer
           example: 1
+        name:
+          type: string
+          example: page
         title:
           type: string
           example: title

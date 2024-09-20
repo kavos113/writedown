@@ -3,6 +3,7 @@ patchPage:
   required:
     - id
     - parentID
+    - name
     - title
     - body
     - creator
@@ -13,6 +14,9 @@ patchPage:
     parentID:
       type: integer
       example: 1
+    name:
+      type: string
+      example: page
     title:
       type: string
       example: title

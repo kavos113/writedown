@@ -14,3 +14,5 @@ create table tags (
     name text not null
     foreign key (page_id) references pages(id)
 );
+
+insert into pages (parent_id, title, body, path, creator_name) values (1, 'Home', 'Welcome to the home page', '/', 'admin');

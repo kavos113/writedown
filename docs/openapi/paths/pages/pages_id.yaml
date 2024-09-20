@@ -50,7 +50,6 @@ delete:
       required: true
       schema:
         type: integer
-        format: int64
         example: 1
   responses:
     '204':

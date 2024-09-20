@@ -11,6 +11,7 @@ import (
 type NewPage struct {
 	Body     string `json:"body"`
 	Creator  string `json:"creator"`
+	Name     string `json:"name"`
 	ParentID int    `json:"parentID"`
 	Title    string `json:"title"`
 }
@@ -20,7 +21,8 @@ type Page struct {
 	Body      string    `json:"body"`
 	CreatedAt time.Time `json:"created_at"`
 	Creator   string    `json:"creator"`
-	Id        int64     `json:"id"`
+	Id        int       `json:"id"`
+	Name      string    `json:"name"`
 	Path      string    `json:"path"`
 	Title     string    `json:"title"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -38,6 +40,7 @@ type PatchPage struct {
 	Body     string `json:"body"`
 	Creator  string `json:"creator"`
 	Id       int    `json:"id"`
+	Name     string `json:"name"`
 	ParentID int    `json:"parentID"`
 	Title    string `json:"title"`
 }
