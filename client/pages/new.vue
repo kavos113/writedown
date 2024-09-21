@@ -5,7 +5,7 @@
 <template>
   <main class="main">
     <SideBarLeft class="sideBarLeft"/>
-    <Content :page-id="1"/>
+    <NewContent :parent-id="1"/>
   </main>
 </template>
 

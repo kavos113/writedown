@@ -2,17 +2,16 @@
 import { marked } from "marked";
 import type { ResponseBody } from "~/lib/oapi-types";
 
-const props = defineProps<{
-    page: ResponseBody<'/pages/{pageID}', 'get', 200>;
-}>();
+const page = defineModel<ResponseBody<"/pages/{pageID}", "get", 200>>({
+    required: true,
+});
 
-const content = ref(props.page.body);
-const output = computed(() => marked.parse(content.value));
+const output = computed(() => marked.parse(page.value.body));
 </script>
 
 <template>
     <div class="editor">
-        <textarea v-model="content"/>
+        <textarea v-model="page.body"/>
         <div v-html="output"/>
     </div>
 </template>

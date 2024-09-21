@@ -11,7 +11,6 @@ const markedContent = marked.parse(props.page.body);
 
 <template>
   <div class="wrapper">
-    <h2>コンテント</h2>
     <div v-html="markedContent"></div>
   </div>
 </template>
