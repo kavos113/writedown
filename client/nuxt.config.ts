@@ -2,15 +2,11 @@
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: { enabled: true },
-    vite: {
-        server: {
-            proxy: {
-                '/api': {
-                    target: 'http://localhost:8080',
-                    secure: false,
-                    changeOrigin: true,
-                    rewrite: (path: string) => path.replace(/^\/api/, '')
-                }
+    nitro: {
+        devProxy: {
+            '/api': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
             }
         }
     },

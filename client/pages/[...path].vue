@@ -1,15 +1,13 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
   <div>
-    <h1>Home</h1>
-    <h1>/</h1>
+    <h1>Page</h1>
   </div>
   <main class="main">
     <SideBarLeft class="sideBarLeft"/>
-    <Content class="contentView" :page-id="1"/>
+    <ContentView class="contentView" :page-id="1"/>
     <SideBarRight class="sideBarRight"/>
   </main>
 </template>

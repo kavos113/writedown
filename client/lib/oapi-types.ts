@@ -23,7 +23,7 @@ type Get<
     : K extends [infer F, ...infer R]
         ? F extends keyof T
             ? R extends (string | number)[]
-                ? Get<Required<T[F]>, R>
+                ? Get<T[F], R>
                 : never
             : never
         : never;
