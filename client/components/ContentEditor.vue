@@ -20,8 +20,14 @@ defineExpose({
 
 <template>
   <div class="editor">
-    <textarea v-model="content" />
-    <div v-html="output" />
+    <textarea
+      v-model="content"
+      class="textarea"
+    />
+    <div
+      v-html="output"
+      class="output"
+    />
   </div>
 </template>
 
@@ -29,5 +35,20 @@ defineExpose({
 .editor {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  border: 1px solid #aaa;
+}
+
+.textarea {
+  width: inherit;
+  height: inherit;
+  border: none;
+  resize: none;
+  border-right: 1px solid #aaa;
+  background-color: #eee;
+  padding: 10px;
+}
+
+.output {
+  padding: 10px;
 }
 </style>

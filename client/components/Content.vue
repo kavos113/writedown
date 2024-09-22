@@ -57,25 +57,28 @@ const newPage = () => {
 </script>
 
 <template>
-  <div>
+  <div class="wrapper">
     <ContentTitle
       ref="contentTitle"
       v-model:title="page.title"
       v-model:is-view="isView"
+      class="contentTitle"
     />
-    <button
-      v-if="isView"
-      @click="edit"
-    >
-      編集
-    </button>
-    <button
-      v-else
-      @click="update"
-    >
-      保存
-    </button>
-    <button @click="newPage">新規</button>
+    <div class="buttonWrapper">
+      <button
+        v-if="isView"
+        @click="edit"
+      >
+        編集
+      </button>
+      <button
+        v-else
+        @click="update"
+      >
+        保存
+      </button>
+      <button @click="newPage">新規</button>
+    </div>
     <ContentView
       v-if="isView"
       class="contentView"
@@ -91,4 +94,26 @@ const newPage = () => {
   <SideBarRight class="sideBarRight" />
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+  display: grid;
+  grid-template-rows: 55px 30px 1fr;
+  gap: 10px;
+}
+
+.contentTitle {
+  grid-row: 1;
+}
+
+.buttonWrapper {
+  grid-row: 2;
+}
+
+.contentView {
+  grid-row: 3;
+}
+
+.contentEditor {
+  grid-row: 3;
+}
+</style>
