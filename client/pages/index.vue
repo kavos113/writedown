@@ -1,11 +1,9 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main class="main">
-    <SideBarLeft class="sideBarLeft"/>
-    <Content :page-id="1"/>
+    <SideBarLeft class="sideBarLeft" />
+    <Content :page-id="1" />
   </main>
 </template>
 

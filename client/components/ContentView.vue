@@ -3,7 +3,7 @@ import { marked } from "marked";
 import type { ResponseBody } from "~/lib/oapi-types";
 
 const props = defineProps<{
-    page: ResponseBody<'/pages/{pageID}', 'get', 200>;
+  page: ResponseBody<"/pages/{pageID}", "get", 200>;
 }>();
 
 const markedContent = marked.parse(props.page.body);
@@ -15,6 +15,4 @@ const markedContent = marked.parse(props.page.body);
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
