@@ -1,18 +1,24 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    compatibilityDate: '2024-04-03',
-    devtools: { enabled: true },
-    nitro: {
-        devProxy: {
-            '/api': {
-                target: 'http://localhost:8080',
-                changeOrigin: true,
-            }
-        }
+  compatibilityDate: "2024-04-03",
+  devtools: { enabled: true },
+  nitro: {
+    devProxy: {
+      "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+      },
     },
-    runtimeConfig: {
-        public: {
-            apiBaseURL: process.env.API_BASE_URL || 'http://localhost:8080'
-        }
-    }
+  },
+  runtimeConfig: {
+    public: {
+      apiBaseURL: process.env.API_BASE_URL || "http://localhost:8080",
+    },
+  },
+  components: [
+    { path: "~/components/contents" },
+    { path: "~/components/items" },
+    "~/components",
+  ],
+  css: ['~/assets/css/main.css'],
 });

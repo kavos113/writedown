@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ResponseBody, RequestBody } from "~/lib/oapi-types";
-import ContentEditor from "./ContentEditor.vue";
+import ContentEditor from "./content/ContentEditor.vue";
 
 const { $toast } = useNuxtApp();
 const props = defineProps<{
@@ -58,8 +58,8 @@ const cancel = () => {
       <div class="header">
         <h1 class="title">新規ページ</h1>
       </div>
-      <button @click="save">保存</button>
-      <button @click="cancel">キャンセル</button>
+      <MenuButton @click="save">保存</MenuButton>
+      <MenuButton @click="cancel">キャンセル</MenuButton>
       <ContentEditor
         ref="editor"
         v-model="page"

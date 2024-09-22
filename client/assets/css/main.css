@@ -1,0 +1,13 @@
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+}
+
+a:hover {
+    color: #747bff;
+}
+
+#__nuxt {
+    font-family: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
+}

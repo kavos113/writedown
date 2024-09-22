@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ResponseBody, RequestBody } from "~/lib/oapi-types";
-import ContentEditor from "./ContentEditor.vue";
-import ContentTitle from "./ContentTitle.vue";
+import ContentEditor from "./content/ContentEditor.vue";
+import ContentTitle from "./content/ContentTitle.vue";
 
 const { $toast } = useNuxtApp();
 const router = useRouter();
@@ -65,20 +65,21 @@ const newPage = () => {
       class="contentTitle"
     />
     <div class="buttonWrapper">
-      <button
+      <MenuButton
         v-if="isView"
         @click="edit"
       >
         編集
-      </button>
-      <button
+      </MenuButton>
+      <MenuButton
         v-else
         @click="update"
       >
         保存
-      </button>
-      <button @click="newPage">新規</button>
+      </MenuButton>
+      <MenuButton @click="newPage">新規</MenuButton>
     </div>
+    <ContentBreadCrumbs :path="page.path" class="contentBreadCrumbs" />
     <ContentView
       v-if="isView"
       class="contentView"
@@ -97,7 +98,7 @@ const newPage = () => {
 <style scoped>
 .wrapper {
   display: grid;
-  grid-template-rows: 55px 30px 1fr;
+  grid-template-rows: 55px 24px 36px 1fr;
   gap: 10px;
 }
 
@@ -106,14 +107,18 @@ const newPage = () => {
 }
 
 .buttonWrapper {
+  grid-row: 3;
+}
+
+.contentBreadCrumbs {
   grid-row: 2;
 }
 
 .contentView {
-  grid-row: 3;
+  grid-row: 4;
 }
 
 .contentEditor {
-  grid-row: 3;
+  grid-row: 4;
 }
 </style>
