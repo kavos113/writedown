@@ -5,14 +5,16 @@ import ContentEditor from "./content/ContentEditor.vue";
 const { $toast } = useNuxtApp();
 const props = defineProps<{
   parentId: number;
+  parentPath: string;
 }>();
 const router = useRouter();
 
 const editor = ref<InstanceType<typeof ContentEditor> | null>(null);
+const isView = ref(true);
 
 const page: ResponseBody<"/pages/{pageID}", "get", 200> = {
   id: 0,
-  path: "",
+  path: props.parentPath,
   name: "",
   title: "",
   body: "",
@@ -54,19 +56,51 @@ const cancel = () => {
 
 <template>
   <div>
-    <div>
-      <div class="header">
-        <h1 class="title">新規ページ</h1>
+    <div class="wrapper">
+      <ContentTitle
+        ref="contentTitle"
+        v-model:title="page.title"
+        v-model:is-view="isView"
+        class="contentTitle"
+      />
+      <div class="buttonWrapper">
+        <MenuButton @click="save">保存</MenuButton>
+        <MenuButton @click="cancel">キャンセル</MenuButton>
       </div>
-      <MenuButton @click="save">保存</MenuButton>
-      <MenuButton @click="cancel">キャンセル</MenuButton>
+      <ContentBreadCrumbs
+        :path="page.path"
+        class="contentBreadCrumbs"
+      />
       <ContentEditor
         ref="editor"
         v-model="page"
+        class="contentEditor"
       />
     </div>
   </div>
   <SideBarRight class="sideBarRight" />
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+  display: grid;
+  grid-template-rows: 55px 24px 36px 1fr;
+  gap: 10px;
+}
+
+.contentTitle {
+  grid-row: 1;
+}
+
+.buttonWrapper {
+  grid-row: 3;
+}
+
+.contentBreadCrumbs {
+  grid-row: 2;
+}
+
+.contentEditor {
+  grid-row: 4;
+}
+</style>

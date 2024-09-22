@@ -51,7 +51,10 @@ const update = () => {
 const newPage = () => {
   router.push({
     name: "new",
-    params: { parentId: page.id },
+    state: {
+      parentId: page.id,
+      parentPath: page.path,
+    },
   });
 };
 </script>
@@ -77,9 +80,12 @@ const newPage = () => {
       >
         保存
       </MenuButton>
-      <MenuButton @click="newPage">新規</MenuButton>
+      <MenuButton @click="newPage">子ページを作る</MenuButton>
     </div>
-    <ContentBreadCrumbs :path="page.path" class="contentBreadCrumbs" />
+    <ContentBreadCrumbs
+      :path="page.path"
+      class="contentBreadCrumbs"
+    />
     <ContentView
       v-if="isView"
       class="contentView"

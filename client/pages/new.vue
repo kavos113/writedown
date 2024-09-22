@@ -1,9 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const state = window.history.state;
+
+const parentId = state?.parentId as number;
+const parentPath = state?.parentPath as string;
+</script>
 
 <template>
   <main class="main">
     <SideBarLeft class="sideBarLeft" />
-    <NewContent :parent-id="1" />
+    <NewContent :parent-id="parentId" :parent-path="parentPath" />
   </main>
 </template>
 
