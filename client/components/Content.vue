@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ResponseBody, RequestBody } from "~/lib/oapi-types";
 import ContentEditor from "./ContentEditor.vue";
+import ContentTitle from "./ContentTitle.vue";
 
 const { $toast } = useNuxtApp();
 const router = useRouter();
@@ -13,6 +14,7 @@ const page = res.data.value as ResponseBody<"/pages/{pageID}", "get", 200>;
 
 const isView = ref(true);
 const editor = ref<InstanceType<typeof ContentEditor> | null>(null);
+const contentTitle = ref<InstanceType<typeof ContentTitle> | null>(null);
 
 const edit = () => {
   isView.value = false;
@@ -20,9 +22,11 @@ const edit = () => {
 
 const update = () => {
   isView.value = true;
-  if (editor.value) {
+  if (editor.value && contentTitle.value) {
     editor.value.update();
+    contentTitle.value.update();
   }
+
   const req: RequestBody<"/pages/{pageID}", "patch"> = {
     id: page.id,
     parentID: 0, // TODO: openapi修正
@@ -31,7 +35,7 @@ const update = () => {
     body: page.body,
     creator: page.creator,
   };
-  useFetch(`/api/pages/${page.id}`, {
+  $fetch(`/api/pages/${page.id}`, {
     method: "PATCH",
     body: JSON.stringify(req),
     onResponse: (res) => {
@@ -54,9 +58,11 @@ const newPage = () => {
 
 <template>
   <div>
-    <div class="header">
-      <h1 class="title">{{ page.title }}</h1>
-    </div>
+    <ContentTitle
+      ref="contentTitle"
+      v-model:title="page.title"
+      v-model:is-view="isView"
+    />
     <button
       v-if="isView"
       @click="edit"
@@ -85,13 +91,4 @@ const newPage = () => {
   <SideBarRight class="sideBarRight" />
 </template>
 
-<style scoped>
-.header {
-  border-bottom: 1px solid #aaa;
-  margin-bottom: 10px;
-}
-
-.title {
-  margin: 0;
-}
-</style>
+<style scoped></style>

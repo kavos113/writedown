@@ -6,6 +6,7 @@ const { $toast } = useNuxtApp();
 const props = defineProps<{
   parentId: number;
 }>();
+const router = useRouter();
 
 const editor = ref<InstanceType<typeof ContentEditor> | null>(null);
 
@@ -45,6 +46,10 @@ const save = () => {
     },
   });
 };
+
+const cancel = () => {
+  router.back();
+};
 </script>
 
 <template>
@@ -54,8 +59,11 @@ const save = () => {
         <h1 class="title">新規ページ</h1>
       </div>
       <button @click="save">保存</button>
-      <button>キャンセル</button>
-      <ContentEditor ref="editor" v-model="page" />
+      <button @click="cancel">キャンセル</button>
+      <ContentEditor
+        ref="editor"
+        v-model="page"
+      />
     </div>
   </div>
   <SideBarRight class="sideBarRight" />
