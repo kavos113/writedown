@@ -12,6 +12,10 @@ const output = computed(() => marked.parse(content.value));
 const update = () => {
     page.value.body = content.value;
 };
+
+defineExpose({
+    update,
+});
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ResponseBody, RequestBody } from "~/lib/oapi-types";
+import ContentEditor from "./ContentEditor.vue";
 
 const { $toast } = useNuxtApp();
 const router = useRouter();
@@ -11,7 +12,7 @@ const res = await useFetch(`/api/pages/${ props.pageId }`);
 const page = res.data.value as ResponseBody<'/pages/{pageID}', 'get', 200>;
 
 const isView = ref(true);
-const editor = ref();
+const editor = ref<InstanceType<typeof ContentEditor> | null>(null);
 
 const edit = () => {
     isView.value = false;
@@ -19,7 +20,9 @@ const edit = () => {
 
 const update = () => {
     isView.value = true;
-    editor.value.update();
+    if(editor.value) {
+        editor.value.update();
+    }
     const req: RequestBody<'/pages/{pageID}', 'patch'> = {
         id: page.id,
         parentID: 0, // TODO: openapi修正
@@ -43,7 +46,7 @@ const update = () => {
 
 const newPage = () => {
     router.push({
-        name: 'new',
+        name: 'new',    
         params: { parentId: page.id },
     });
 }
@@ -58,7 +61,7 @@ const newPage = () => {
         <button v-else @click="update">保存</button>
         <button @click="newPage">新規</button>
         <ContentView v-if="isView" class="contentView" :page="page"/>
-        <ContentEditor v-else :ref="editor" v-model="page" class="contentEditor"/>
+        <ContentEditor v-else ref="editor" v-model="page" class="contentEditor"/>
     </div>
     <SideBarRight class="sideBarRight"/>
 </template>
