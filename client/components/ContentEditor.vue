@@ -6,12 +6,17 @@ const page = defineModel<ResponseBody<"/pages/{pageID}", "get", 200>>({
     required: true,
 });
 
-const output = computed(() => marked.parse(page.value.body));
+const content = ref(page.value.body);
+const output = computed(() => marked.parse(content.value)); 
+
+const update = () => {
+    page.value.body = content.value;
+};
 </script>
 
 <template>
     <div class="editor">
-        <textarea v-model="page.body"/>
+        <textarea v-model="content"/>
         <div v-html="output"/>
     </div>
 </template>

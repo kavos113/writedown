@@ -11,12 +11,15 @@ const res = await useFetch(`/api/pages/${ props.pageId }`);
 const page = res.data.value as ResponseBody<'/pages/{pageID}', 'get', 200>;
 
 const isView = ref(true);
+const editor = ref();
 
 const edit = () => {
     isView.value = false;
 };
+
 const update = () => {
     isView.value = true;
+    editor.value.update();
     const req: RequestBody<'/pages/{pageID}', 'patch'> = {
         id: page.id,
         parentID: 0, // TODO: openapi修正
@@ -54,8 +57,8 @@ const newPage = () => {
         <button v-if="isView" @click="edit">編集</button>
         <button v-else @click="update">保存</button>
         <button @click="newPage">新規</button>
-        <ContentView class="contentView" :page="page"v-if="isView"/>
-        <ContentEditor class="contentEditor" v-model="page" v-else/>
+        <ContentView v-if="isView" class="contentView" :page="page"/>
+        <ContentEditor v-else :ref="editor" v-model="page" class="contentEditor"/>
     </div>
     <SideBarRight class="sideBarRight"/>
 </template>
