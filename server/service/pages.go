@@ -18,7 +18,7 @@ func NewPages() Pages {
 	return Pages{}
 }
 
-func (p Pages) PostPages(ctx echo.Context, req openapi.NewPage) (openapi.Page, error) {
+func (p Pages) PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody) (openapi.Page, error) {
 	parentPath, err := p.PagesRepository.GetPagePath(req.ParentID)
 	if err != nil {
 		log.Printf("failed to get parent page path: %v", err)
@@ -80,7 +80,7 @@ func (p Pages) GetPagesPageID(ctx echo.Context, pageID int) (openapi.Page, error
 	return res, nil
 }
 
-func (p Pages) PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchPage) (openapi.Page, error) {
+func (p Pages) PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchPagesPageIDJSONRequestBody) (openapi.Page, error) {
 	ret, err := p.PagesRepository.UpdatePageByID(pageID, repository.Page{
 		ID:          pageID,
 		Name:        req.Name,

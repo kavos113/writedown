@@ -8,7 +8,7 @@ import (
 )
 
 func (Server) PostPages(ctx echo.Context) error {
-	req := openapi.NewPage{}
+	req := openapi.PostPagesJSONRequestBody{}
 	if err := ctx.Bind(&req); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
@@ -37,7 +37,7 @@ func (Server) GetPagesPageID(ctx echo.Context, pageID int) error {
 }
 
 func (Server) PatchPagesPageID(ctx echo.Context, pageID int) error {
-	req := openapi.PatchPage{}
+	req := openapi.PatchPagesPageIDJSONRequestBody{}
 	if err := ctx.Bind(&req); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
