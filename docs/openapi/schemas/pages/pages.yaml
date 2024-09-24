@@ -4,7 +4,6 @@ page:
     - id
     - path
     - name
-    - title
     - body
     - created_at
     - updated_at
@@ -19,9 +18,6 @@ page:
     name:
       type: string
       example: page
-    title:
-      type: string
-      example: title
     body:
       type: string
       example: wikiページの内容
@@ -41,7 +37,6 @@ newPage:
   required:
     - parentID
     - name
-    - title
     - body
     - creator
   properties:
@@ -51,9 +46,6 @@ newPage:
     name:
       type: string
       example: page
-    title:
-      type: string
-      example: title
     body:
       type: string
       example: wikiページの内容

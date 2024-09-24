@@ -2,24 +2,16 @@ patchPage:
   type: object
   required:
     - id
-    - parentID
     - name
-    - title
     - body
     - creator
   properties:
     id:
       type: integer
       example: 1
-    parentID:
-      type: integer
-      example: 1
     name:
       type: string
       example: page
-    title:
-      type: string
-      example: title
     body:
       type: string
       example: wikiページの内容
