@@ -8,4 +8,5 @@ type User struct {
 type UsersRepository interface {
 	CountUserByUsername(username string) (int, error)
 	CreateUser(u User) error
+	GetUser(username string) (User, error)
 }

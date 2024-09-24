@@ -1,6 +1,9 @@
 package service
 
 import (
+	"database/sql"
+	"errors"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
 	"log"
@@ -45,6 +48,37 @@ func (u Users) PostUsersSignup(ctx echo.Context, req openapi.PostUsersSignupJSON
 }
 
 func (u Users) PostUsersLogin(ctx echo.Context, req openapi.PostUsersLoginJSONRequestBody) error {
+	user, err := u.UsersRepository.GetUser(req.Username)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return echo.NewHTTPError(http.StatusUnauthorized, "invalid username or password")
+		} else {
+			log.Printf("failed to get user: %v", err)
+			return echo.NewHTTPError(http.StatusInternalServerError, "internal server error")
+		}
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password))
+	if err != nil {
+		if errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
+			return echo.NewHTTPError(http.StatusUnauthorized, "invalid username or password")
+		} else {
+			log.Printf("failed to compare password: %v", err)
+			return echo.NewHTTPError(http.StatusInternalServerError, "internal server error")
+		}
+	}
+
+	sess, err := session.Get("session", ctx)
+	if err != nil {
+		log.Printf("failed to get session: %v", err)
+		return echo.NewHTTPError(http.StatusInternalServerError, "internal server error")
+	}
+	sess.Values["userName"] = user.Username
+	err = sess.Save(ctx.Request(), ctx.Response())
+	if err != nil {
+		log.Printf("failed to save session: %v", err)
+		return echo.NewHTTPError(http.StatusInternalServerError, "internal server error")
+	}
 	return nil
 }
 

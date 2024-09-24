@@ -21,3 +21,13 @@ func (User) CreateUser(u User) error {
 	}
 	return nil
 }
+
+func (User) GetUser(username string) (User, error) {
+	user := User{}
+	err := db.Get(&user, "SELECT * FROM users WHERE username = ?", username)
+	if err != nil {
+		log.Printf("Error getting user: %v", err)
+		return User{}, err
+	}
+	return user, nil
+}

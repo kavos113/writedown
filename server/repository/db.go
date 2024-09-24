@@ -19,7 +19,7 @@ func NewConnection(conf mysql.Config) error {
 }
 
 func NewStore() (*mysqlstore.MySQLStore, error) {
-	store, err := mysqlstore.NewMySQLStoreFromConnection(db.DB, "sessions", "/", 60*60*24*14, []byte("secret"))
+	store, err := mysqlstore.NewMySQLStoreFromConnection(db.DB, "session", "/", 60*60*24*14, []byte("secret"))
 	if err != nil {
 		return nil, err
 	}
