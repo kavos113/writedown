@@ -16,7 +16,6 @@ const page: ResponseBody<"/pages/{pageID}", "get", 200> = {
   id: 0,
   path: props.parentPath,
   name: "",
-  title: "",
   body: "",
   creator: "",
   created_at: "",
@@ -32,7 +31,6 @@ const save = () => {
   const req: RequestBody<"/pages", "post"> = {
     parentID: props.parentId,
     name: page.name,
-    title: page.title,
     body: page.body,
     creator: page.creator,
   };
@@ -59,7 +57,7 @@ const cancel = () => {
     <div class="wrapper">
       <ContentTitle
         ref="contentTitle"
-        v-model:title="page.title"
+        v-model:name="page.name"
         v-model:is-view="isView"
         class="contentTitle"
       />

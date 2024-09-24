@@ -29,9 +29,7 @@ const update = () => {
 
   const req: RequestBody<"/pages/{pageID}", "patch"> = {
     id: page.id,
-    parentID: 0, // TODO: openapi修正
     name: page.name,
-    title: page.title,
     body: page.body,
     creator: page.creator,
   };
@@ -63,7 +61,7 @@ const newPage = () => {
   <div class="wrapper">
     <ContentTitle
       ref="contentTitle"
-      v-model:title="page.title"
+      v-model:name="page.name"
       v-model:is-view="isView"
       class="contentTitle"
     />

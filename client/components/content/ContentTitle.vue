@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const titleModel = defineModel<string>("title", {
+const nameModel = defineModel<string>("name", {
   required: true,
 });
 const isView = defineModel<boolean>("isView", {
   required: true,
 });
 
-const title = ref(titleModel.value);
+const name = ref(nameModel.value);
 const isTitleView = ref(true);
 
 const titleEdit = () => {
@@ -17,7 +17,7 @@ const titleEdit = () => {
 
 const update = () => {
   isTitleView.value = true;
-  titleModel.value = title.value;
+  nameModel.value = name.value;
 };
 
 defineExpose({
@@ -34,7 +34,7 @@ defineExpose({
       v-if="isTitleView"
       class="title"
     >
-      {{ title }}
+      {{ name }}
       <span
         v-if="!isView"
         class="clickToEdit"
@@ -43,7 +43,7 @@ defineExpose({
     </h1>
     <input
       v-else
-      v-model="title"
+      v-model="name"
       class="input"
     />
   </div>
