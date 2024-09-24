@@ -5,7 +5,7 @@ import "time"
 type Page struct {
 	ID          int       `db:"id"`
 	ParentID    int       `db:"parent_id"`
-	Title       string    `db:"title"`
+	Name        string    `db:"name"`
 	Body        string    `db:"body"`
 	Path        string    `db:"path"`
 	CreatedAt   time.Time `db:"created_at"`

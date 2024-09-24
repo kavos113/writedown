@@ -2,10 +2,11 @@ package repository
 
 import (
 	"log"
+	"strings"
 )
 
 func (r Repository) CreatePage(p Page) (Page, error) {
-	res, err := r.db.Exec("INSERT INTO pages (parent_id, title, body, path, created_at, updated_at, creator_name) VALUES (?, ?, ?, ?, ?, ?, ?)", p.ParentID, p.Title, p.Body, p.Path, p.CreatedAt, p.UpdatedAt, p.CreatorName)
+	res, err := r.db.Exec("INSERT INTO pages (parent_id, name, body, path, created_at, updated_at, creator_name) VALUES (?, ?, ?, ?, ?, ?, ?)", p.ParentID, p.Name, p.Body, p.Path, p.CreatedAt, p.UpdatedAt, p.CreatorName)
 	if err != nil {
 		log.Printf("Error creating page: %v", err)
 		return Page{}, err
@@ -20,7 +21,7 @@ func (r Repository) CreatePage(p Page) (Page, error) {
 	ret := Page{
 		ID:          int(id),
 		ParentID:    p.ParentID,
-		Title:       p.Title,
+		Name:        p.Name,
 		Body:        p.Body,
 		Path:        p.Path,
 		CreatedAt:   p.CreatedAt,
@@ -43,7 +44,15 @@ func (r Repository) GetPageByID(id int) (Page, error) {
 }
 
 func (r Repository) UpdatePageByID(id int, p Page) (Page, error) {
-	_, err := r.db.Exec("UPDATE pages SET parent_id = ?, title = ?, body = ?, path = ?, updated_at = ?, creator_name = ? WHERE id = ?", p.ParentID, p.Title, p.Body, p.Path, p.UpdatedAt, p.CreatorName, id)
+	path, err := r.GetPagePath(id)
+	if err != nil {
+		log.Printf("Error getting page path: %v", err)
+		return Page{}, err
+	}
+
+	newPath := path[:strings.LastIndex(path, "/")+1] + p.Name
+
+	_, err = r.db.Exec("UPDATE pages SET parent_id = ?, name = ?, body = ?, path = ?, updated_at = ?, creator_name = ? WHERE id = ?", p.ParentID, p.Name, p.Body, newPath, p.UpdatedAt, p.CreatorName, id)
 	if err != nil {
 		log.Printf("Error updating page: %v", err)
 		return Page{}, err

@@ -28,7 +28,7 @@ func (p Pages) PostPages(ctx echo.Context, req openapi.NewPage) (openapi.Page, e
 	path := parentPath + "/" + req.Name
 	ret, err := p.PagesRepository.CreatePage(repository.Page{
 		ParentID:    req.ParentID,
-		Title:       req.Title,
+		Name:        req.Name,
 		Body:        req.Body,
 		Path:        path,
 		CreatedAt:   time.Now(),
@@ -44,7 +44,6 @@ func (p Pages) PostPages(ctx echo.Context, req openapi.NewPage) (openapi.Page, e
 		Id:        ret.ID,
 		Path:      ret.Path,
 		Name:      req.Name,
-		Title:     ret.Title,
 		Body:      ret.Body,
 		CreatedAt: ret.CreatedAt,
 		UpdatedAt: ret.UpdatedAt,
@@ -73,7 +72,6 @@ func (p Pages) GetPagesPageID(ctx echo.Context, pageID int) (openapi.Page, error
 		Id:        page.ID,
 		Path:      page.Path,
 		Name:      strings.Split(page.Path, "/")[len(strings.Split(page.Path, "/"))-1],
-		Title:     page.Title,
 		Body:      page.Body,
 		CreatedAt: page.CreatedAt,
 		UpdatedAt: page.UpdatedAt,
@@ -83,19 +81,10 @@ func (p Pages) GetPagesPageID(ctx echo.Context, pageID int) (openapi.Page, error
 }
 
 func (p Pages) PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchPage) (openapi.Page, error) {
-	parentPath, err := p.PagesRepository.GetPagePath(req.ParentID)
-	if err != nil {
-		log.Printf("failed to get parent page path: %v", err)
-		return openapi.Page{}, echo.NewHTTPError(http.StatusInternalServerError, "internal server error")
-	}
-
-	path := parentPath + "/" + req.Name
 	ret, err := p.PagesRepository.UpdatePageByID(pageID, repository.Page{
 		ID:          pageID,
-		ParentID:    req.ParentID,
-		Title:       req.Title,
+		Name:        req.Name,
 		Body:        req.Body,
-		Path:        path,
 		UpdatedAt:   time.Now(),
 		CreatorName: req.Creator,
 	})
@@ -108,7 +97,6 @@ func (p Pages) PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchP
 		Id:        ret.ID,
 		Path:      ret.Path,
 		Name:      req.Name,
-		Title:     ret.Title,
 		Body:      ret.Body,
 		CreatedAt: ret.CreatedAt,
 		UpdatedAt: ret.UpdatedAt,
@@ -129,7 +117,7 @@ func (p Pages) GetPagesPageIDChild(ctx echo.Context, pageID int) ([]openapi.Page
 		res[i] = openapi.PageAbstract{
 			Id:    page.ID,
 			Path:  page.Path,
-			Title: page.Title,
+			Title: page.Name,
 		}
 	}
 
