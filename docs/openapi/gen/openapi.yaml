@@ -8,6 +8,10 @@ tags:
     description: 疎通確認
   - name: pages
     description: wikiページ
+  - name: users
+    description: ユーザー
+  - name: tags
+    description: ページのタグ
 paths:
   /ping:
     get:
@@ -117,6 +121,158 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/pageAbstract'
+  /pages/{pageID}/tag:
+    get:
+      tags:
+        - pages
+        - tags
+      summary: ページのタグ取得
+      parameters:
+        - name: pageID
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - pages
+        - tags
+      summary: ページにタグを追加
+      parameters:
+        - name: pageID
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tag'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - pages
+        - tags
+      summary: ページのタグを削除
+      parameters:
+        - name: pageID
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: tagID
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /pages/tag:
+    get:
+      tags:
+        - pages
+        - tags
+      summary: タグに対応するページの一覧を取得
+      parameters:
+        - name: tagID
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/pageAbstract'
+        '404':
+          description: Not Found
+  /users/signup:
+    post:
+      tags:
+        - users
+      summary: ユーザー登録
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: ログイン
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /users/me:
+    get:
+      tags:
+        - users
+      summary: 自身のユーザー情報取得
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/me'
 components:
   schemas:
     pong:
@@ -127,6 +283,26 @@ components:
         message:
           type: string
           example: pong
+    newPage:
+      type: object
+      required:
+        - parentID
+        - name
+        - body
+        - creator
+      properties:
+        parentID:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: page
+        body:
+          type: string
+          example: wikiページの内容
+        creator:
+          type: string
+          example: owner
     page:
       type: object
       required:
@@ -158,26 +334,6 @@ components:
           type: string
           format: date-time
           example: '2021-01-01T00:00:00Z'
-        creator:
-          type: string
-          example: owner
-    newPage:
-      type: object
-      required:
-        - parentID
-        - name
-        - body
-        - creator
-      properties:
-        parentID:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: page
-        body:
-          type: string
-          example: wikiページの内容
         creator:
           type: string
           example: owner
@@ -217,3 +373,40 @@ components:
         title:
           type: string
           example: title
+    tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: タグID
+        name:
+          type: string
+          description: タグ名
+      required:
+        - id
+        - name
+    tags:
+      type: array
+      items:
+        $ref: '#/components/schemas/tag'
+    login:
+      type: object
+      properties:
+        username:
+          type: string
+          description: ユーザー名
+        password:
+          type: string
+          format: password
+          description: パスワード
+      required:
+        - username
+        - password
+    me:
+      type: object
+      properties:
+        username:
+          type: string
+          description: ユーザー名
+      required:
+        - username

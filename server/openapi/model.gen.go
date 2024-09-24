@@ -7,6 +7,21 @@ import (
 	"time"
 )
 
+// Login defines model for login.
+type Login struct {
+	// Password パスワード
+	Password string `json:"password"`
+
+	// Username ユーザー名
+	Username string `json:"username"`
+}
+
+// Me defines model for me.
+type Me struct {
+	// Username ユーザー名
+	Username string `json:"username"`
+}
+
 // NewPage defines model for newPage.
 type NewPage struct {
 	Body     string `json:"body"`
@@ -46,8 +61,39 @@ type Pong struct {
 	Message string `json:"message"`
 }
 
+// Tag defines model for tag.
+type Tag struct {
+	// Id タグID
+	Id int `json:"id"`
+
+	// Name タグ名
+	Name string `json:"name"`
+}
+
+// Tags defines model for tags.
+type Tags = []Tag
+
+// GetPagesTagParams defines parameters for GetPagesTag.
+type GetPagesTagParams struct {
+	TagID int `form:"tagID" json:"tagID"`
+}
+
+// DeletePagesPageIDTagParams defines parameters for DeletePagesPageIDTag.
+type DeletePagesPageIDTagParams struct {
+	TagID int `form:"tagID" json:"tagID"`
+}
+
 // PostPagesJSONRequestBody defines body for PostPages for application/json ContentType.
 type PostPagesJSONRequestBody = NewPage
 
 // PatchPagesPageIDJSONRequestBody defines body for PatchPagesPageID for application/json ContentType.
 type PatchPagesPageIDJSONRequestBody = PatchPage
+
+// PostPagesPageIDTagJSONRequestBody defines body for PostPagesPageIDTag for application/json ContentType.
+type PostPagesPageIDTagJSONRequestBody = Tag
+
+// PostUsersLoginJSONRequestBody defines body for PostUsersLogin for application/json ContentType.
+type PostUsersLoginJSONRequestBody = Login
+
+// PostUsersSignupJSONRequestBody defines body for PostUsersSignup for application/json ContentType.
+type PostUsersSignupJSONRequestBody = Login

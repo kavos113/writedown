@@ -59,7 +59,7 @@ delete:
         type: integer
         example: 1
     - name: tagID
-      in: path
+      in: query
       required: true
       schema:
         type: integer

@@ -4,12 +4,12 @@ get:
     - tags
   summary: タグに対応するページの一覧を取得
   parameters:
-    - name: tag
-      in: path
+    - name: tagID
+      in: query
       required: true
       schema:
-        type: string
-        example: 'tag1'
+        type: integer
+        example: 2
   responses:
     '200':
       description: OK

@@ -5,9 +5,9 @@ post:
   requestBody:
     required: true
     content:
-    application/json:
-      schema:
-        $ref: '../../schemas/users/login.yaml#/login'
+      application/json:
+        schema:
+          $ref: '../../schemas/users/login.yaml#/login'
   responses:
     '200':
       description: OK

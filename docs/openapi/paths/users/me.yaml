@@ -4,8 +4,8 @@ get:
   summary: 自身のユーザー情報取得
   responses:
     '200':
-    description: OK
-    content:
-      application/json:
-      schema:
-        $ref: '../../schemas/users/me.yaml#/me'
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/users/me.yaml#/me'
