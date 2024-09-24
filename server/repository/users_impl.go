@@ -2,9 +2,9 @@ package repository
 
 import "log"
 
-func (r Repository) CountUserByUsername(username string) (int, error) {
+func (User) CountUserByUsername(username string) (int, error) {
 	var count int
-	err := r.db.Get(&count, "SELECT COUNT(*) FROM users WHERE username = ?", username)
+	err := db.Get(&count, "SELECT COUNT(*) FROM users WHERE username = ?", username)
 	if err != nil {
 		log.Printf("Error counting user by username: %v", err)
 		return 0, err
@@ -13,8 +13,8 @@ func (r Repository) CountUserByUsername(username string) (int, error) {
 	return count, nil
 }
 
-func (r Repository) CreateUser(u User) error {
-	_, err := r.db.Exec("INSERT INTO users (username, password) VALUES (?, ?)", u.Username, u.Password)
+func (User) CreateUser(u User) error {
+	_, err := db.Exec("INSERT INTO users (username, password) VALUES (?, ?)", u.Username, u.Password)
 	if err != nil {
 		log.Printf("Error creating user: %v", err)
 		return err
