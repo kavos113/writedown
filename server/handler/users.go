@@ -15,6 +15,10 @@ func (Server) PostUsersSignup(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
+	if req.Username == "" || req.Password == "" {
+		return echo.NewHTTPError(http.StatusBadRequest, "username and password are required")
+	}
+
 	err := service.NewUsers().PostUsersSignup(ctx, req)
 	if err != nil {
 		return err
