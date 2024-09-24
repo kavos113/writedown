@@ -1,0 +1,8 @@
+me:
+  type: object
+  properties:
+    username:
+      type: string
+      description: ユーザー名
+  required:
+    - username

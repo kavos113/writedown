@@ -1,0 +1,19 @@
+post:
+  tags:
+    - users
+  summary: ログイン
+  requestBody:
+    required: true
+    content:
+    application/json:
+      schema:
+        $ref: '../../schemas/users/login.yaml#/login'
+  responses:
+    '200':
+      description: OK
+    '400':
+      description: Bad Request
+    '401':
+      description: Unauthorized
+    '500':
+      description: Internal Server Error

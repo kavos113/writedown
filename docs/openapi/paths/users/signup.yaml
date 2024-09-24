@@ -1,0 +1,19 @@
+post:
+  tags:
+    - users
+  summary: ユーザー登録
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/users/login.yaml#/login'
+  responses:
+    '200':
+      description: OK
+    '400':
+      description: Bad Request
+    '409':
+      description: Conflict
+    '500':
+      description: Internal Server Error

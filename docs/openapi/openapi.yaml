@@ -8,6 +8,10 @@ tags:
     description: 疎通確認
   - name: pages
     description: wikiページ
+  - name: users
+    description: ユーザー
+  - name: tags
+    description: ページのタグ
 paths:
   /ping:
     get:
@@ -27,6 +31,16 @@ paths:
     $ref: './paths/pages/pages_id.yaml'
   /pages/{pageID}/child:
     $ref: './paths/pages/pages_child.yaml'
+  /pages/{pageID}/tag:
+    $ref: './paths/pages/pages_tag.yaml'
+  /pages/tag:
+    $ref: './paths/pages/tag.yaml'
+  /users/signup:
+    $ref: './paths/users/signup.yaml'
+  /users/login:
+    $ref: './paths/users/login.yaml'
+  /users/me:
+    $ref: './paths/users/me.yaml'
 
 components:
   schemas:
@@ -38,11 +52,3 @@ components:
         message:
           type: string
           example: pong
-    page:
-      $ref: './schemas/pages/pages.yaml#/page'
-    newPage:
-      $ref: './schemas/pages/pages.yaml#/newPage'
-    patchPage:
-      $ref: './schemas/pages/pages_id.yaml#/patchPage'
-    pageAbstract:
-      $ref: './schemas/pages/pages_child.yaml#/pageAbstract'

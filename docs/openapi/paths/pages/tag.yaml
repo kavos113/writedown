@@ -1,0 +1,23 @@
+get:
+  tags:
+    - pages
+    - tags
+  summary: タグに対応するページの一覧を取得
+  parameters:
+    - name: tag
+      in: path
+      required: true
+      schema:
+        type: string
+        example: 'tag1'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/pages/pages_child.yaml#/pageAbstract'
+    '404':
+      description: Not Found

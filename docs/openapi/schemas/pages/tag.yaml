@@ -1,0 +1,17 @@
+tag:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: タグID
+    name:
+      type: string
+      description: タグ名
+  required:
+    - id
+    - name
+
+tags:
+  type: array
+  items:
+    $ref: '#/tag'

@@ -1,0 +1,75 @@
+get:
+  tags:
+    - pages
+    - tags
+  summary: ページのタグ取得
+  parameters:
+    - name: pageID
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/pages/tag.yaml#/tags'
+    '404':
+      description: Not Found
+post:
+  tags:
+    - pages
+    - tags
+  summary: ページにタグを追加
+  parameters:
+    - name: pageID
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/pages/tag.yaml#/tag'
+  responses:
+    '200':
+      description: OK
+    '400':
+      description: Bad Request
+    '404':
+      description: Not Found
+    '500':
+      description: Internal Server Error
+delete:
+  tags:
+    - pages
+    - tags
+  summary: ページのタグを削除
+  parameters:
+    - name: pageID
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+    - name: tagID
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+  responses:
+    '200':
+      description: OK
+    '400':
+      description: Bad Request
+    '404':
+      description: Not Found
+    '500':
+      description: Internal Server Error
