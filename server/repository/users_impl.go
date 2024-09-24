@@ -14,5 +14,10 @@ func (r Repository) CountUserByUsername(username string) (int, error) {
 }
 
 func (r Repository) CreateUser(u User) error {
+	_, err := r.db.Exec("INSERT INTO users (username, password) VALUES (?, ?)", u.Username, u.Password)
+	if err != nil {
+		log.Printf("Error creating user: %v", err)
+		return err
+	}
 	return nil
 }
