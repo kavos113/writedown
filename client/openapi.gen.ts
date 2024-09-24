@@ -217,8 +217,6 @@ export interface components {
             path: string;
             /** @example page */
             name: string;
-            /** @example title */
-            title: string;
             /** @example wikiページの内容 */
             body: string;
             /**
@@ -239,8 +237,6 @@ export interface components {
             parentID: number;
             /** @example page */
             name: string;
-            /** @example title */
-            title: string;
             /** @example wikiページの内容 */
             body: string;
             /** @example owner */
@@ -249,12 +245,8 @@ export interface components {
         patchPage: {
             /** @example 1 */
             id: number;
-            /** @example 1 */
-            parentID: number;
             /** @example page */
             name: string;
-            /** @example title */
-            title: string;
             /** @example wikiページの内容 */
             body: string;
             /** @example owner */

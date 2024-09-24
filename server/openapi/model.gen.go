@@ -13,7 +13,6 @@ type NewPage struct {
 	Creator  string `json:"creator"`
 	Name     string `json:"name"`
 	ParentID int    `json:"parentID"`
-	Title    string `json:"title"`
 }
 
 // Page defines model for page.
@@ -24,7 +23,6 @@ type Page struct {
 	Id        int       `json:"id"`
 	Name      string    `json:"name"`
 	Path      string    `json:"path"`
-	Title     string    `json:"title"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
@@ -37,12 +35,10 @@ type PageAbstract struct {
 
 // PatchPage defines model for patchPage.
 type PatchPage struct {
-	Body     string `json:"body"`
-	Creator  string `json:"creator"`
-	Id       int    `json:"id"`
-	Name     string `json:"name"`
-	ParentID int    `json:"parentID"`
-	Title    string `json:"title"`
+	Body    string `json:"body"`
+	Creator string `json:"creator"`
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
 }
 
 // Pong defines model for pong.
