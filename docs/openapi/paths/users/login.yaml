@@ -1,6 +1,7 @@
 post:
   tags:
     - users
+    - login
   summary: ログイン
   requestBody:
     required: true

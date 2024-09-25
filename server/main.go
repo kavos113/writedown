@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"time"
+	"writedown-server/auth"
 	"writedown-server/handler"
 	"writedown-server/openapi"
 	"writedown-server/repository"
@@ -40,9 +41,17 @@ func main() {
 		log.Fatal(err)
 	}
 
+	swagger, err := openapi.GetSwagger()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	m := auth.NewMiddleware(swagger)
+
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(session.Middleware(store))
+	e.Use(m.UserAuthMiddleware)
 
 	openapi.RegisterHandlers(e, server)
 

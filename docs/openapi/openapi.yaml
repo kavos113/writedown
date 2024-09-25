@@ -12,6 +12,8 @@ tags:
     description: ユーザー
   - name: tags
     description: ページのタグ
+  - name: login
+    description: ログイン
 paths:
   /ping:
     get:
