@@ -10,15 +10,23 @@ import (
 	"writedown-server/repository"
 )
 
-type Pages struct {
+type Pages interface {
+	PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody) (openapi.Page, error)
+	DeletePagesPageID(ctx echo.Context, pageID int64) error
+	GetPagesPageID(ctx echo.Context, pageID int) (openapi.Page, error)
+	PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchPagesPageIDJSONRequestBody) (openapi.Page, error)
+	GetPagesPageIDChild(ctx echo.Context, pageID int) ([]openapi.PageAbstract, error)
+}
+
+type pages struct {
 	repository.PagesRepository
 }
 
 func NewPages() Pages {
-	return Pages{}
+	return pages{}
 }
 
-func (p Pages) PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody) (openapi.Page, error) {
+func (p pages) PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody) (openapi.Page, error) {
 	parentPath, err := p.PagesRepository.GetPagePath(req.ParentID)
 	if err != nil {
 		log.Printf("failed to get parent page path: %v", err)
@@ -52,7 +60,7 @@ func (p Pages) PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody)
 	return res, nil
 }
 
-func (p Pages) DeletePagesPageID(ctx echo.Context, pageID int64) error {
+func (p pages) DeletePagesPageID(ctx echo.Context, pageID int64) error {
 	err := p.PagesRepository.DeletePageByID(int(pageID))
 	if err != nil {
 		log.Printf("failed to delete page: %v", err)
@@ -61,7 +69,7 @@ func (p Pages) DeletePagesPageID(ctx echo.Context, pageID int64) error {
 	return nil
 }
 
-func (p Pages) GetPagesPageID(ctx echo.Context, pageID int) (openapi.Page, error) {
+func (p pages) GetPagesPageID(ctx echo.Context, pageID int) (openapi.Page, error) {
 	page, err := p.PagesRepository.GetPageByID(pageID)
 	if err != nil {
 		log.Printf("failed to get page: %v", err)
@@ -80,7 +88,7 @@ func (p Pages) GetPagesPageID(ctx echo.Context, pageID int) (openapi.Page, error
 	return res, nil
 }
 
-func (p Pages) PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchPagesPageIDJSONRequestBody) (openapi.Page, error) {
+func (p pages) PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchPagesPageIDJSONRequestBody) (openapi.Page, error) {
 	ret, err := p.PagesRepository.UpdatePageByID(pageID, repository.Page{
 		ID:          pageID,
 		Name:        req.Name,
@@ -105,7 +113,7 @@ func (p Pages) PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchP
 	return res, nil
 }
 
-func (p Pages) GetPagesPageIDChild(ctx echo.Context, pageID int) ([]openapi.PageAbstract, error) {
+func (p pages) GetPagesPageIDChild(ctx echo.Context, pageID int) ([]openapi.PageAbstract, error) {
 	pages, err := p.PagesRepository.GetChildrenPages(pageID)
 	if err != nil {
 		log.Printf("failed to get children pages: %v", err)

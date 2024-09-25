@@ -12,15 +12,21 @@ import (
 	"writedown-server/repository"
 )
 
-type Users struct {
+type Users interface {
+	PostUsersSignup(ctx echo.Context, req openapi.PostUsersSignupJSONRequestBody) error
+	PostUsersLogin(ctx echo.Context, req openapi.PostUsersLoginJSONRequestBody) error
+	GetUsersMe(ctx echo.Context) (openapi.Me, error)
+}
+
+type users struct {
 	repository.UsersRepository
 }
 
 func NewUsers() Users {
-	return Users{}
+	return users{}
 }
 
-func (u Users) PostUsersSignup(ctx echo.Context, req openapi.PostUsersSignupJSONRequestBody) error {
+func (u users) PostUsersSignup(ctx echo.Context, req openapi.PostUsersSignupJSONRequestBody) error {
 	count, err := u.UsersRepository.CountUserByUsername(req.Username)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "internal server error")
@@ -47,7 +53,7 @@ func (u Users) PostUsersSignup(ctx echo.Context, req openapi.PostUsersSignupJSON
 	return nil
 }
 
-func (u Users) PostUsersLogin(ctx echo.Context, req openapi.PostUsersLoginJSONRequestBody) error {
+func (u users) PostUsersLogin(ctx echo.Context, req openapi.PostUsersLoginJSONRequestBody) error {
 	user, err := u.UsersRepository.GetUser(req.Username)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -82,6 +88,6 @@ func (u Users) PostUsersLogin(ctx echo.Context, req openapi.PostUsersLoginJSONRe
 	return nil
 }
 
-func (u Users) GetUsersMe(ctx echo.Context) (openapi.Me, error) {
+func (u users) GetUsersMe(ctx echo.Context) (openapi.Me, error) {
 	return openapi.Me{}, nil
 }
