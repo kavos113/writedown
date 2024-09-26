@@ -84,7 +84,7 @@ func (pr pagesRepository) GetPagePath(id int) (string, error) {
 
 func (pr pagesRepository) GetChildrenPages(id int) ([]PageAbstract, error) {
 	var pages []PageAbstract
-	err := db.Select(&pages, "SELECT (id, path, name) FROM pages WHERE parent_id = ?", id)
+	err := db.Select(&pages, "SELECT id, path, name FROM pages WHERE parent_id = ?", id)
 	if err != nil {
 		log.Printf("Error getting children pages: %v", err)
 		return nil, err
