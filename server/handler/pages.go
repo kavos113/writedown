@@ -20,7 +20,7 @@ func (Server) PostPages(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res)
 }
 
-func (Server) DeletePagesPageID(ctx echo.Context, pageID int64) error {
+func (Server) DeletePagesPageID(ctx echo.Context, pageID int) error {
 	err := service.NewPages().DeletePagesPageID(ctx, pageID)
 	if err != nil {
 		return err

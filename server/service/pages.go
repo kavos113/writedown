@@ -12,7 +12,7 @@ import (
 
 type Pages interface {
 	PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody) (openapi.Page, error)
-	DeletePagesPageID(ctx echo.Context, pageID int64) error
+	DeletePagesPageID(ctx echo.Context, pageID int) error
 	GetPagesPageID(ctx echo.Context, pageID int) (openapi.Page, error)
 	PatchPagesPageID(ctx echo.Context, pageID int, req openapi.PatchPagesPageIDJSONRequestBody) (openapi.Page, error)
 	GetPagesPageIDChild(ctx echo.Context, pageID int) ([]openapi.PageAbstract, error)
@@ -60,8 +60,8 @@ func (p pages) PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody)
 	return res, nil
 }
 
-func (p pages) DeletePagesPageID(ctx echo.Context, pageID int64) error {
-	err := p.PagesRepository.DeletePageByID(int(pageID))
+func (p pages) DeletePagesPageID(ctx echo.Context, pageID int) error {
+	err := p.PagesRepository.DeletePageByID(pageID)
 	if err != nil {
 		log.Printf("failed to delete page: %v", err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "internal server error")
