@@ -18,7 +18,7 @@ services:
         condition: service_healthy
   
   mariadb:
-    image: mariadb:latest
+    image: mariadb:10.11.9
     environment:
       MARIADB_ROOT_PASSWORD: password
       MARIADB_DATABASE: writedown
@@ -29,7 +29,7 @@ services:
     volumes:
       - "./schema.sql:/docker-entrypoint-initdb.d/init.sql"
     healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 -u root -ppassword
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$MARIADB_ROOT_PASSWORD"]
       interval: 1s
       timeout: 10s
       retries: 60
