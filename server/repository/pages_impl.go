@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func (Page) CreatePage(p Page) (Page, error) {
+func (pr pagesRepository) CreatePage(p Page) (Page, error) {
 	res, err := db.Exec("INSERT INTO pages (parent_id, name, body, path, created_at, updated_at, creator_name) VALUES (?, ?, ?, ?, ?, ?, ?)", p.ParentID, p.Name, p.Body, p.Path, p.CreatedAt, p.UpdatedAt, p.CreatorName)
 	if err != nil {
 		log.Printf("Error creating page: %v", err)
@@ -32,7 +32,7 @@ func (Page) CreatePage(p Page) (Page, error) {
 	return ret, nil
 }
 
-func (Page) GetPageByID(id int) (Page, error) {
+func (pr pagesRepository) GetPageByID(id int) (Page, error) {
 	p := Page{}
 	err := db.Get(&p, "SELECT * FROM pages WHERE id = ?", id)
 	if err != nil {
@@ -43,8 +43,8 @@ func (Page) GetPageByID(id int) (Page, error) {
 	return p, nil
 }
 
-func (Page) UpdatePageByID(id int, p Page) (Page, error) {
-	path, err := p.GetPagePath(id)
+func (pr pagesRepository) UpdatePageByID(id int, p Page) (Page, error) {
+	path, err := pr.GetPagePath(id)
 	if err != nil {
 		log.Printf("Error getting page path: %v", err)
 		return Page{}, err
@@ -61,7 +61,7 @@ func (Page) UpdatePageByID(id int, p Page) (Page, error) {
 	return p, nil
 }
 
-func (Page) DeletePageByID(id int) error {
+func (pr pagesRepository) DeletePageByID(id int) error {
 	_, err := db.Exec("DELETE FROM pages WHERE id = ?", id)
 	if err != nil {
 		log.Printf("Error deleting page: %v", err)
@@ -71,7 +71,7 @@ func (Page) DeletePageByID(id int) error {
 	return nil
 }
 
-func (Page) GetPagePath(id int) (string, error) {
+func (pr pagesRepository) GetPagePath(id int) (string, error) {
 	var path string
 	err := db.Get(&path, "SELECT path FROM pages WHERE id = ?", id)
 	if err != nil {
@@ -82,7 +82,7 @@ func (Page) GetPagePath(id int) (string, error) {
 	return path, nil
 }
 
-func (Page) GetChildrenPages(id int) ([]Page, error) {
+func (pr pagesRepository) GetChildrenPages(id int) ([]Page, error) {
 	pages := []Page{}
 	err := db.Select(&pages, "SELECT * FROM pages WHERE parent_id = ?", id)
 	if err != nil {

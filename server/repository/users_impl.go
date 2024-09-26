@@ -2,7 +2,7 @@ package repository
 
 import "log"
 
-func (User) CountUserByUsername(username string) (int, error) {
+func (ur usersRepository) CountUserByUsername(username string) (int, error) {
 	var count int
 	err := db.Get(&count, "SELECT COUNT(*) FROM users WHERE username = ?", username)
 	if err != nil {
@@ -13,7 +13,7 @@ func (User) CountUserByUsername(username string) (int, error) {
 	return count, nil
 }
 
-func (User) CreateUser(u User) error {
+func (ur usersRepository) CreateUser(u User) error {
 	_, err := db.Exec("INSERT INTO users (username, password) VALUES (?, ?)", u.Username, u.Password)
 	if err != nil {
 		log.Printf("Error creating user: %v", err)
@@ -22,7 +22,7 @@ func (User) CreateUser(u User) error {
 	return nil
 }
 
-func (User) GetUser(username string) (User, error) {
+func (ur usersRepository) GetUser(username string) (User, error) {
 	user := User{}
 	err := db.Get(&user, "SELECT * FROM users WHERE username = ?", username)
 	if err != nil {

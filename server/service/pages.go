@@ -23,7 +23,7 @@ type pages struct {
 }
 
 func NewPages() Pages {
-	return pages{}
+	return pages{repository.NewPagesRepository()}
 }
 
 func (p pages) PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody) (openapi.Page, error) {

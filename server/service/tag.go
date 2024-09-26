@@ -2,7 +2,9 @@ package service
 
 import (
 	"github.com/labstack/echo/v4"
+	"net/http"
 	"writedown-server/openapi"
+	"writedown-server/repository"
 )
 
 type Tag interface {
@@ -13,6 +15,7 @@ type Tag interface {
 }
 
 type tag struct {
+	repository.TagsRepository
 }
 
 func NewTag() Tag {
@@ -20,8 +23,10 @@ func NewTag() Tag {
 }
 
 func (t tag) GetPagesTag(ctx echo.Context, tagID int) ([]openapi.PageAbstract, error) {
-	//TODO implement me
-	panic("implement me")
+	pages, err := t.TagsRepository.GetPagesByTagID(tagID)
+	if err != nil {
+		return nil, echo.NewHTTPError(http.StatusInternalServerError, "internal server error")
+	}
 }
 
 func (t tag) DeletePagesPageIDTag(ctx echo.Context, pageID int, tagID int) error {

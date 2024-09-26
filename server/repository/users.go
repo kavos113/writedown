@@ -10,3 +10,9 @@ type UsersRepository interface {
 	CreateUser(u User) error
 	GetUser(username string) (User, error)
 }
+
+type usersRepository struct{}
+
+func NewUsersRepository() UsersRepository {
+	return usersRepository{}
+}

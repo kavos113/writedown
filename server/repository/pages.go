@@ -22,3 +22,9 @@ type PagesRepository interface {
 	GetPagePath(id int) (string, error)
 	GetChildrenPages(id int) ([]Page, error)
 }
+
+type pagesRepository struct{}
+
+func NewPagesRepository() PagesRepository {
+	return pagesRepository{}
+}

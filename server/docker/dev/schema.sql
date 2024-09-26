@@ -7,6 +7,8 @@ create table pages (
     created_at timestamp not null default current_timestamp,
     updated_at timestamp not null default current_timestamp on update current_timestamp,
     creator_name text not null
+    foreign key (parent_id) references pages(id)
+    foreign key (creator_name) references users(username)
 );
 create table tags (
     id int(11) not null primary key auto_increment,

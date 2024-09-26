@@ -23,7 +23,7 @@ type users struct {
 }
 
 func NewUsers() Users {
-	return users{}
+	return users{repository.NewUsersRepository()}
 }
 
 func (u users) PostUsersSignup(ctx echo.Context, req openapi.PostUsersSignupJSONRequestBody) error {
