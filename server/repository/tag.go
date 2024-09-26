@@ -10,7 +10,7 @@ type TagsRepository interface {
 	CreateTag(t Tag) (Tag, error)
 	GetTagsByPageID(pageID int) ([]Tag, error)
 	DeleteTagByTagID(tagID int) error
-	GetPagesByTagID(tagID int) ([]Page, error)
+	GetPagesByTagID(tagID int) ([]PageAbstract, error)
 }
 
 type tagsRepository struct{}

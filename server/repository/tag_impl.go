@@ -15,7 +15,7 @@ func (tr tagsRepository) DeleteTagByTagID(tagID int) error {
 	panic("implement me")
 }
 
-func (tr tagsRepository) GetPagesByTagID(tagID int) ([]Page, error) {
+func (tr tagsRepository) GetPagesByTagID(tagID int) ([]PageAbstract, error) {
 	//TODO implement me
 	panic("implement me")
 }

@@ -13,6 +13,12 @@ type Page struct {
 	CreatorName string    `db:"creator_name"`
 }
 
+type PageAbstract struct {
+	ID   int    `db:"id"`
+	Path string `db:"path"`
+	Name string `db:"name"`
+}
+
 type PagesRepository interface {
 	CreatePage(p Page) (Page, error)
 	GetPageByID(id int) (Page, error)
@@ -20,7 +26,7 @@ type PagesRepository interface {
 	DeletePageByID(id int) error
 
 	GetPagePath(id int) (string, error)
-	GetChildrenPages(id int) ([]Page, error)
+	GetChildrenPages(id int) ([]PageAbstract, error)
 }
 
 type pagesRepository struct{}
