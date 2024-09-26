@@ -211,7 +211,7 @@ paths:
           required: true
           schema:
             type: integer
-            example: 2
+            example: 1
       responses:
         '200':
           description: OK
