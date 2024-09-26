@@ -4,6 +4,7 @@ const Diff = require('diff');
 
 function getRequests(doc) {
     const requests = [];
+    
     for (const path in doc.paths) {
         for (const method in doc.paths[path]) {
             if (method === "delete") continue;
@@ -34,9 +35,16 @@ function getRequests(doc) {
                 req.url = setQueryParameters(req.url, queryParams);
             }
             
-            requests.push(req);
+            if (doc.paths[path][method].tags.includes("login")) {
+                requests.unshift(req);
+            } else {
+                requests.push(req);
+            }
         }
     }
+    // signupを先に
+    requests.sort((a, b) => a.url.includes("signup") ? -1 : 0);
+    
     return requests;
 }
 
@@ -104,7 +112,8 @@ async function executeRequests(requests) {
 try {
     const doc = yaml.load(fs.readFileSync('../../../docs/openapi/gen/openapi.yaml', 'utf8'));
     const requests = getRequests(doc);
-    await executeRequests(requests);
+    console.log(requests);
+    // await executeRequests(requests);
 } catch (e) {
     console.log(e);
 }

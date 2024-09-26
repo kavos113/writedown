@@ -16,7 +16,7 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
-
+  
   mariadb:
     image: mariadb:latest
     environment:
@@ -27,13 +27,13 @@ services:
     expose:
       - "3306"
     volumes:
-      - "./schema.sql:/docker-entrypoint-initdb.d/schema.sql"
+      - "./schema.sql:/docker-entrypoint-initdb.d/init.sql"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword"]
+      test: mysqladmin ping -h 127.0.0.1 -u root -ppassword
       interval: 1s
-      timeout: 3s
-      retries: 30
-
+      timeout: 10s
+      retries: 60
+  
   adminer:
     image: adminer:latest
     ports:
@@ -42,3 +42,5 @@ services:
       ADMINER_DEFAULT_SERVER: mariadb
       ADMINER_DEFAULT_USERNAME: root
       ADMINER_DEFAULT_PASSWORD: password
+    depends_on:
+      - mariadb
