@@ -1,8 +1,9 @@
 {
-  "scripts":      {
+  "scripts": {
     "oapi": "npx @redocly/cli bundle -o docs/openapi/gen --ext yaml docs/openapi/paths/*.yaml docs/openapi/schemas/*.yaml docs/openapi/openapi.yaml"
   },
   "dependencies": {
-    "@redocly/openapi-cli": "^1.0.0-beta.95"
+    "@redocly/openapi-cli": "^1.0.0-beta.95",
+    "js-yaml": "^4.1.0"
   }
 }

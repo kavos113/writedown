@@ -593,18 +593,28 @@ export interface components {
             title: string;
         };
         tag: {
-            /** @description タグID */
+            /**
+             * @description タグID
+             * @example 1
+             */
             id: number;
-            /** @description タグ名 */
+            /**
+             * @description タグ名
+             * @example tag
+             */
             name: string;
         };
         tags: components["schemas"]["tag"][];
         login: {
-            /** @description ユーザー名 */
+            /**
+             * @description ユーザー名
+             * @example username
+             */
             username: string;
             /**
              * Format: password
              * @description パスワード
+             * @example password
              */
             password: string;
         };

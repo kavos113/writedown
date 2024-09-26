@@ -3,9 +3,11 @@ tag:
   properties:
     id:
       type: integer
+      example: 1
       description: タグID
     name:
       type: string
+      example: tag
       description: タグ名
   required:
     - id

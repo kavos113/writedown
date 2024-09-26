@@ -12,6 +12,8 @@ tags:
     description: ユーザー
   - name: tags
     description: ページのタグ
+  - name: login
+    description: ログイン
 paths:
   /ping:
     get:
@@ -225,6 +227,7 @@ paths:
     post:
       tags:
         - users
+        - login
       summary: ユーザー登録
       requestBody:
         required: true
@@ -245,6 +248,7 @@ paths:
     post:
       tags:
         - users
+        - login
       summary: ログイン
       requestBody:
         required: true
@@ -378,9 +382,11 @@ components:
       properties:
         id:
           type: integer
+          example: 1
           description: タグID
         name:
           type: string
+          example: tag
           description: タグ名
       required:
         - id
@@ -394,10 +400,12 @@ components:
       properties:
         username:
           type: string
+          example: username
           description: ユーザー名
         password:
           type: string
           format: password
+          example: password
           description: パスワード
       required:
         - username
