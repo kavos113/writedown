@@ -19,6 +19,10 @@ func (ur usersRepository) CreateUser(u User) error {
 		log.Printf("Error creating user: %v", err)
 		return err
 	}
+
+	userName[u.ID] = u.Username
+	userID[u.Username] = u.ID
+
 	return nil
 }
 

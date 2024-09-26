@@ -3,14 +3,15 @@ package repository
 import "time"
 
 type Page struct {
-	ID          int       `db:"id"`
-	ParentID    int       `db:"parent_id"`
-	Name        string    `db:"name"`
-	Body        string    `db:"body"`
-	Path        string    `db:"path"`
-	CreatedAt   time.Time `db:"created_at"`
-	UpdatedAt   time.Time `db:"updated_at"`
-	CreatorName string    `db:"creator_name"`
+	ID            int       `db:"id"`
+	ParentID      int       `db:"parent_id"`
+	Name          string    `db:"name"`
+	Body          string    `db:"body"`
+	Path          string    `db:"path"`
+	CreatedAt     time.Time `db:"created_at"`
+	UpdatedAt     time.Time `db:"updated_at"`
+	CreatorName   string
+	CreatorUserID int `db:"creator_user_id"`
 }
 
 type PageAbstract struct {

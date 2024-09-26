@@ -11,9 +11,8 @@ create table pages (
     path text not null,
     created_at timestamp not null default current_timestamp,
     updated_at timestamp not null default current_timestamp on update current_timestamp,
-    creator_name text not null,
-    foreign key (parent_id) references pages(id),
-    foreign key (creator_name) references users(username)
+    creator_user_id text not null,
+    foreign key (creator_user_id) references users(id)
 );
 create table tags (
     id int(11) not null primary key auto_increment,

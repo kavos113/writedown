@@ -6,7 +6,11 @@ import (
 	"github.com/srinathgs/mysqlstore"
 )
 
-var db *sqlx.DB
+var (
+	db       *sqlx.DB
+	userName map[int]string
+	userID   map[string]int
+)
 
 func NewConnection(conf mysql.Config) error {
 	_db, err := sqlx.Open("mysql", conf.FormatDSN())
