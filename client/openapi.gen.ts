@@ -553,7 +553,7 @@ export interface components {
             creator: string;
         };
         page: {
-            /** @example 1 */
+            /** @example 2 */
             id: number;
             /** @example /path/to/page */
             path: string;
@@ -575,7 +575,7 @@ export interface components {
             creator: string;
         };
         patchPage: {
-            /** @example 1 */
+            /** @example 2 */
             id: number;
             /** @example page */
             name: string;
@@ -585,11 +585,11 @@ export interface components {
             creator: string;
         };
         pageAbstract: {
-            /** @example 1 */
+            /** @example 2 */
             id: number;
             /** @example /path/to/page */
             path: string;
-            /** @example title */
+            /** @example page */
             title: string;
         };
         tag: {
@@ -608,7 +608,7 @@ export interface components {
         login: {
             /**
              * @description ユーザー名
-             * @example username
+             * @example owner
              */
             username: string;
             /**
@@ -619,7 +619,10 @@ export interface components {
             password: string;
         };
         me: {
-            /** @description ユーザー名 */
+            /**
+             * @description ユーザー名
+             * @example owner
+             */
             username: string;
         };
     };

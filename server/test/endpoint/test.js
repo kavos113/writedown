@@ -17,7 +17,7 @@ function getRequests(doc) {
             
             const responses = doc.paths[path][method].responses;
             for (const status in responses) {
-                if (status !== "200" || status !== "201") {
+                if (status !== "200" && status !== "201") {
                     break;
                 }
                 
@@ -45,17 +45,37 @@ function getRequests(doc) {
     // signupを先に
     requests.sort((a, b) => a.url.includes("signup") ? -1 : 0);
     
+    requests.forEach(req => {
+        req.url = `http://localhost:8080${req.url}`;
+    });
+    
     return requests;
 }
 
 function getComponent(schemas, schema) {
+    if (schema.type && schema.type === "array") {
+        schema = schema.items;
+        schema.array = true;
+    }
     const name = schema.$ref.slice('#/components/schemas/'.length);
-    const component = schemas[name].properties;
+    let component = schemas[name].properties;
     
-    return Object.entries(component).reduce((acc, [key, value]) => {
+    
+    if (schemas[name].items?.$ref) {
+        component = getComponent(schemas, schemas[name].items);
+        schema.inRef = true;
+    }
+    
+    if (schema.inRef) {
+        return schema.array ? [component] : component;
+    }
+    
+    const ret = Object.entries(component).reduce((acc, [key, value]) => {
         acc[key] = value.example;
         return acc;
     }, {});
+    
+    return schema.array ? [ret] : ret;
 }
 
 function setPathParameter(path, schema) {
@@ -79,15 +99,73 @@ async function executeRequests(requests) {
     let results = "## Results\n";
     let diffs = "## Diffs\n";
     
+    // signup
+    try {
+        const options = {
+            method: requests[0].method,
+            headers: { 'Content-Type': 'application/json' },
+            body: requests[0].data ? JSON.stringify(requests[0].data) : undefined
+        };
+        const response = await fetch(requests[0].url, options);
+        
+        results += `### ${requests[0].method} ${requests[0].url} ${response.status} ${response.statusText}\n`;
+        
+        console.log(`Finish: ${requests[0].method} ${requests[0].url}, ${response.status} ${response.statusText}`);
+    } catch (error) {
+        results += `### ${requests[0].method} ${requests[0].url}\nERROR: ${error.message}\n\n`;
+        console.log(`Error: ${requests[0].method} ${requests[0].url}`);
+    }
+    console.log("Signup done");
+    
+    let session;
+    
+    // login
+    await new Promise(resolve => setTimeout(resolve, 300));
+    try {
+        const options = {
+            method: requests[1].method,
+            headers: { 'Content-Type': 'application/json' },
+            body: requests[1].data ? JSON.stringify(requests[1].data) : undefined
+        };
+        const response = await fetch(requests[1].url, options);
+        
+        session = response.headers.get('Set-Cookie');
+        
+        results += `### ${requests[1].method} ${requests[1].url} ${response.status} ${response.statusText}\n`;
+        
+        console.log(`Finish: ${requests[1].method} ${requests[1].url}, ${response.status} ${response.statusText}`);
+    } catch (error) {
+        results += `### ${requests[1].method} ${requests[1].url}\nERROR: ${error.message}\n\n`;
+        console.log(`Error: ${requests[1].method} ${requests[1].url}`);
+    }
+    
+    requests = requests.slice(2);
+    
     for (const req of requests) {
+        await new Promise(resolve => setTimeout(resolve, 300));
         try {
             const options = {
                 method: req.method,
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': session
+                },
                 body: req.data ? JSON.stringify(req.data) : undefined
             };
             const response = await fetch(req.url, options);
-            const data = await response.json();
+            const text = await response.text();
+            
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                results += `### ${req.method} ${req.url} ${response.status} ${response.statusText}\n`;
+                results += "```\n";
+                results += `${text}\n`;
+                results += "```\n";
+                console.log(`Finish: ${req.method} ${req.url}, ${response.status} ${response.statusText}`);
+                continue;
+            }
             
             results += `### ${req.method} ${req.url} ${response.status} ${response.statusText}\n`;
             results += "```json\n";
@@ -97,12 +175,35 @@ async function executeRequests(requests) {
             const diff = Diff.diffJson(data, req.example);
             const real = diff.filter(item => item.removed);
             const expected = diff.filter(item => item.added);
+            const realText = real.map(item => {
+                if (item.value.includes("created_at") || item.value.includes("updated_at")) {
+                    return "";
+                }
+                return "+" + item.value;
+            });
+            const expectedText = expected.map(item => {
+                if (item.value.includes("created_at") || item.value.includes("updated_at")) {
+                    return "";
+                }
+                return "-" + item.value;
+            });
+            let diffText = "";
+            for (let i = 0; i < realText.length; i++) {
+                diffText += `${realText[i]}${expectedText[i]}`;
+            }
+            if (diffText === "") {
+                console.log(`Finish: ${req.method} ${req.url}, ${response.status} ${response.statusText}`);
+                continue;
+            }
             diffs += `### ${req.method} ${req.url} diff\n`;
             diffs += "```json\n";
-            diffs += `real: ${JSON.stringify(real, null, "\t")}\n\nexpected: ${JSON.stringify(expected, null, "\t")}\n\n`;
-            diffs += "```\n";
+            diffs += `${diffText}\n`;
+            diffs += "```\n\n";
+            
+            console.log(`Finish: ${req.method} ${req.url}, ${response.status} ${response.statusText}`);
         } catch (error) {
             results += `### ${req.method} ${req.url}\nERROR: ${error.message}\n\n`;
+            console.log(`Error: ${req.method} ${req.url}`);
         }
     }
     
@@ -112,8 +213,8 @@ async function executeRequests(requests) {
 try {
     const doc = yaml.load(fs.readFileSync('../../../docs/openapi/gen/openapi.yaml', 'utf8'));
     const requests = getRequests(doc);
-    console.log(requests);
-    // await executeRequests(requests);
+    //console.dir(requests, { depth: null });
+    executeRequests(requests).then(() => console.log("done"));
 } catch (e) {
     console.log(e);
 }

@@ -56,7 +56,7 @@ paths:
           required: true
           schema:
             type: integer
-            example: 1
+            example: 2
       responses:
         '200':
           description: Retrieved successfully
@@ -74,7 +74,7 @@ paths:
           required: true
           schema:
             type: integer
-            example: 1
+            example: 2
       requestBody:
         required: true
         content:
@@ -98,7 +98,7 @@ paths:
           required: true
           schema:
             type: integer
-            example: 1
+            example: 2
       responses:
         '204':
           description: Deleted successfully
@@ -156,7 +156,7 @@ paths:
           required: true
           schema:
             type: integer
-            example: 1
+            example: 2
       requestBody:
         required: true
         content:
@@ -320,7 +320,7 @@ components:
       properties:
         id:
           type: integer
-          example: 1
+          example: 2
         path:
           type: string
           example: /path/to/page
@@ -351,7 +351,7 @@ components:
       properties:
         id:
           type: integer
-          example: 1
+          example: 2
         name:
           type: string
           example: page
@@ -370,13 +370,13 @@ components:
       properties:
         id:
           type: integer
-          example: 1
+          example: 2
         path:
           type: string
           example: /path/to/page
         title:
           type: string
-          example: title
+          example: page
     tag:
       type: object
       properties:
@@ -400,7 +400,7 @@ components:
       properties:
         username:
           type: string
-          example: username
+          example: owner
           description: ユーザー名
         password:
           type: string
@@ -415,6 +415,7 @@ components:
       properties:
         username:
           type: string
+          example: owner
           description: ユーザー名
       required:
         - username

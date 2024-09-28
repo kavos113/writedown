@@ -89,5 +89,7 @@ func (u users) PostUsersLogin(ctx echo.Context, req openapi.PostUsersLoginJSONRe
 }
 
 func (u users) GetUsersMe(ctx echo.Context) (openapi.Me, error) {
-	return openapi.Me{}, nil
+	return openapi.Me{
+		Username: ctx.Get("userName").(string),
+	}, nil
 }

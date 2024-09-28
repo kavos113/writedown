@@ -1,9 +1,7 @@
 FROM golang:1.23.1-alpine
-WORKDIR /work
+WORKDIR /app
 COPY ../../ .
 
-CMD ["ls", "-la"]
+RUN go build -o app
 
-#RUN go build -o app
-
-#ENTRYPOINT ./app
+ENTRYPOINT ./app

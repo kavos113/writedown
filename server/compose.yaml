@@ -4,7 +4,7 @@ services:
   writedown:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./docker/dev/Dockerfile
     ports:
       - "8080:8080"
     environment:
@@ -17,6 +17,7 @@ services:
       mariadb:
         condition: service_healthy
   
+  
   mariadb:
     image: mariadb:10.11.9
     environment:
@@ -27,9 +28,9 @@ services:
     expose:
       - "3306"
     volumes:
-      - "./schema.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "./docker/dev/schema.sql:/docker-entrypoint-initdb.d/init.sql"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$MARIADB_ROOT_PASSWORD"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword" ]
       interval: 1s
       timeout: 10s
       retries: 60
@@ -42,5 +43,3 @@ services:
       ADMINER_DEFAULT_SERVER: mariadb
       ADMINER_DEFAULT_USERNAME: root
       ADMINER_DEFAULT_PASSWORD: password
-    depends_on:
-      - mariadb

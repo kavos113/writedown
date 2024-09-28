@@ -3,6 +3,7 @@ me:
   properties:
     username:
       type: string
+      example: owner
       description: ユーザー名
   required:
     - username

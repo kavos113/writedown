@@ -14,11 +14,19 @@ func (ur usersRepository) CountUserByUsername(username string) (int, error) {
 }
 
 func (ur usersRepository) CreateUser(u User) error {
-	_, err := db.Exec("INSERT INTO users (username, password) VALUES (?, ?)", u.Username, u.Password)
+	res, err := db.Exec("INSERT INTO users (username, password) VALUES (?, ?)", u.Username, u.Password)
 	if err != nil {
 		log.Printf("Error creating user: %v", err)
 		return err
 	}
+
+	id, err := res.LastInsertId()
+	if err != nil {
+		log.Printf("Error getting last insert ID: %v", err)
+		return err
+	}
+
+	u.ID = int(id)
 
 	userName[u.ID] = u.Username
 	userID[u.Username] = u.ID

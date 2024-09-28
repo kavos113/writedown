@@ -7,7 +7,7 @@ import (
 
 func (pr pagesRepository) CreatePage(p Page) (Page, error) {
 	p.CreatorUserID = userID[p.CreatorName]
-	res, err := db.Exec("INSERT INTO pages (parent_id, name, body, path, created_at, updated_at, creator_user_id) VALUES (?, ?, ?, ?, ?, ?, ?)", p.ParentID, p.Name, p.Body, p.Path, p.CreatedAt, p.UpdatedAt, p.CreatorUserID)
+	res, err := db.Exec("INSERT INTO pages (parent_id, name, body, path, created_at, updated_at, creator_user_id) VALUES (?, ?, ?, ?, ?, ?, ?)", 1, p.Name, p.Body, p.Path, p.CreatedAt, p.UpdatedAt, p.CreatorUserID)
 	if err != nil {
 		log.Printf("Error creating page: %v", err)
 		return Page{}, err
@@ -57,7 +57,7 @@ func (pr pagesRepository) UpdatePageByID(id int, p Page) (Page, error) {
 
 	p.CreatorUserID = userID[p.CreatorName]
 
-	_, err = db.Exec("UPDATE pages SET parent_id = ?, name = ?, body = ?, path = ?, updated_at = ?, creator_user_id = ? WHERE id = ?", p.ParentID, p.Name, p.Body, newPath, p.UpdatedAt, p.CreatorUserID, id)
+	_, err = db.Exec("UPDATE pages SET name = ?, body = ?, path = ?, updated_at = ?, creator_user_id = ? WHERE id = ?", p.Name, p.Body, newPath, p.UpdatedAt, p.CreatorUserID, id)
 	if err != nil {
 		log.Printf("Error updating page: %v", err)
 		return Page{}, err

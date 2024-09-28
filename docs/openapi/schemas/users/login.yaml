@@ -3,7 +3,7 @@ login:
   properties:
     username:
       type: string
-      example: username
+      example: owner
       description: ユーザー名
     password:
       type: string

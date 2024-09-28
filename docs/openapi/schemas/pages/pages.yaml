@@ -11,7 +11,7 @@ page:
   properties:
     id:
       type: integer
-      example: 1
+      example: 2
     path:
       type: string
       example: /path/to/page

@@ -19,6 +19,9 @@ func NewConnection(conf mysql.Config) error {
 	}
 
 	db = _db
+
+	userName = make(map[int]string)
+	userID = make(map[string]int)
 	return nil
 }
 

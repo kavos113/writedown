@@ -34,6 +34,9 @@ func (p pages) PostPages(ctx echo.Context, req openapi.PostPagesJSONRequestBody)
 	}
 
 	path := parentPath + "/" + req.Name
+	if req.ParentID == 1 {
+		path = "/" + req.Name
+	}
 	ret, err := p.PagesRepository.CreatePage(repository.Page{
 		ParentID:    req.ParentID,
 		Name:        req.Name,

@@ -23,14 +23,15 @@ func main() {
 	server := handler.NewServer()
 
 	err = repository.NewConnection(mysql.Config{
-		User:      os.Getenv("DB_USERNAME"),
-		Passwd:    os.Getenv("DB_PASSWORD"),
-		Net:       "tcp",
-		Addr:      os.Getenv("DB_HOSTNAME") + ":" + os.Getenv("DB_PORT"),
-		DBName:    os.Getenv("DB_NAME"),
-		ParseTime: true,
-		Collation: "utf8mb4_general_ci",
-		Loc:       jst,
+		User:                 os.Getenv("DB_USERNAME"),
+		Passwd:               os.Getenv("DB_PASSWORD"),
+		Net:                  "tcp",
+		Addr:                 os.Getenv("DB_HOSTNAME") + ":" + os.Getenv("DB_PORT"),
+		DBName:               os.Getenv("DB_NAME"),
+		ParseTime:            true,
+		Collation:            "utf8mb4_general_ci",
+		Loc:                  jst,
+		AllowNativePasswords: true,
 	})
 	if err != nil {
 		log.Fatal(err)

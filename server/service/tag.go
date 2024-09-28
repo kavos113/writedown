@@ -21,7 +21,7 @@ type tag struct {
 }
 
 func NewTag() Tag {
-	return tag{}
+	return tag{repository.NewTagsRepository()}
 }
 
 func (t tag) GetPagesTag(ctx echo.Context, tagID int) ([]openapi.PageAbstract, error) {
